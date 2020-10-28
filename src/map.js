@@ -38,21 +38,47 @@ function initMap() {
 
     //Set up the add to route button
     document.getElementById("addToRoute").addEventListener("click", () => {
-        myRoute.addToRoute(document.getElementById("searchBox").value);
+        myRoute.addToRoute(document.getElementById("searchBox").value, true);
     });
     //Set up the calculate route button
     document.getElementById("calculateRoute").addEventListener("click", () => {
         if (myRoute.isValidRoute()) calculateDirections(myRoute);
         else alert("Route must have at least two points");
         document.getElementById("searchBox").value = "";
-    })
+    });
     //Set up the clear route button
     document.getElementById("clearRoute").addEventListener("click", () => {
         location.reload(); //Just reload the page :)
         /*myRoute.clearRoute();
         directionsRenderer.setMap(null);
         document.getElementById("searchBox").value = "";*/
-    })
+    });
+
+    //Creates a button to add the user's current location to the route list
+    document.getElementById("addGPS").addEventListener("click", () => {
+        if (navigator.geolocation){ //If the user allows the geolocation services
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(error);
+                    const currentPos = {  
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    }; 
+                    
+                    console.log(currentPos);
+                    myRoute.addToRoute(currentPos.lat.toString() + ", " + currentPos.lng.toString(), false);
+                },
+                (error) => {
+                    alert(error.message);
+                    console.log(error.message);
+                }
+            )
+        }
+        else{
+            console.log("Geolocation services were not allowed.");
+            alert("Geolocation services were not allowed.");
+        }
+    });
 
     /* High-ordered Helper function
     * @post: A marker is added to the Google Map
@@ -88,7 +114,7 @@ function initMap() {
         });
         //When you doubleclick a marker, add the place to the route and close the infowindow
         marker.addListener("dblclick", () => { 
-            myRoute.addToRoute(name);
+            myRoute.addToRoute(name, true);
             infowindow.close();
         })
     }

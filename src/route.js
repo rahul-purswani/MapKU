@@ -20,8 +20,9 @@ class Route{
     * @post: A place is added to the route with ", Lawrence Kansas" added to it
     * @param: place: a string to hand into the Google Directions API 
     */
-    addToRoute = (place) => {
-        this.routeList.push(place + ", Lawrence Kansas");
+    addToRoute = (place, formatPlace) => {
+        if (formatPlace) this.routeList.push(place + ", Lawrence Kansas");
+        else this.routeList.push(place);
         //Make the origin the first element of the routeList
         this.origin = this.routeList[0];
         //Make every element except the first and last a waypoint
@@ -35,8 +36,14 @@ class Route{
         //Add each point in the route to the sidebar places. (This might not belong here tbh)
         let rtlist = document.getElementById("routeList");
         let li = document.createElement("li");
-        li.setAttribute('id', place);
-        li.appendChild(document.createTextNode(place));
+        if (formatPlace) {
+            li.setAttribute('id', place);
+            li.appendChild(document.createTextNode(place));
+        }
+        else{
+            li.setAttribute('id', "Current Location");
+            li.appendChild(document.createTextNode("Current Location"));
+        }
         rtlist.appendChild(li);
     }
     /*
