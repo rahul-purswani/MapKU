@@ -1,0 +1,15 @@
+Story points project 4: Fully develop your project 3 prototype
+
+Story Points: 8
+
+. User is able to add their GPS location to the route
+
+. User is able to view bus stops and their time tables
+
+. User is able to view more buildings than the prototype
+
+. . User is able to input a class/class no and add it to the route
+
+. Creation of deployment plan and maintenance plan
+
+. . Test suite is a one click option to test all modules

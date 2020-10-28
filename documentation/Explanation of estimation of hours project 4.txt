@@ -1,0 +1,18 @@
+We used the Agile story point method of calculating person
+hours. The previous project's story points and hours are as follows:
+
+~ = based on estimation
+
+Project 1: 8 story points, ~42 hours
+
+Project 2: 5 story points, ~30 hours
+
+Project 3: 8 story points, 53.33 hours
+
+From this data, We believe that project 4 will take about 60 hours.
+Project 4 is an 8 story point project just like projects 1 and 3.
+However, I believe that project 4 is a little bit more complicated
+than the others. It is still on the same order of story points,
+but will likely take slightly longer. 
+
+So, our final estimate is 60 hours.
