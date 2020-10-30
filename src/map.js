@@ -59,7 +59,6 @@ function initMap() {
         if (navigator.geolocation){ //If the user allows the geolocation services
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    console.log(error);
                     const currentPos = {  
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
