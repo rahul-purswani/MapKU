@@ -38,8 +38,11 @@ function initMap() {
 
     //Set up the add to route button
     document.getElementById("addToRoute").addEventListener("click", () => {
-        myRoute.addToRoute(document.getElementById("searchBox").value, true);
-        addPlaceToHTML(document.getElementById("searchBox").value, false);
+        let searchInfo = document.getElementById("searchBox").value;
+        if (searchInfo.length > 0){
+            myRoute.addToRoute(searchInfo, true);
+            addPlaceToHTML(searchInfo, false);
+        }
     });
     //Set up the calculate route button
     document.getElementById("calculateRoute").addEventListener("click", () => {
