@@ -39,6 +39,7 @@ function initMap() {
     //Set up the add to route button
     document.getElementById("addToRoute").addEventListener("click", () => {
         myRoute.addToRoute(document.getElementById("searchBox").value, true);
+        addPlaceToHTML(document.getElementById("searchBox").value, false);
     });
     //Set up the calculate route button
     document.getElementById("calculateRoute").addEventListener("click", () => {
@@ -50,6 +51,9 @@ function initMap() {
     document.getElementById("clearRoute").addEventListener("click", () => {
         location.reload(); //Just reload the page :)
         /*myRoute.clearRoute();
+        //Reset some of the HTML info
+        document.getElementById("routeList").innerHTML = "<u>Route:</u>";
+        document.getElementById("directionInfo").innerHTML = "Double click on building markers or search for a building to form a route.";
         directionsRenderer.setMap(null);
         document.getElementById("searchBox").value = "";*/
     });
@@ -66,6 +70,7 @@ function initMap() {
                     
                     console.log(currentPos);
                     myRoute.addToRoute(currentPos.lat.toString() + ", " + currentPos.lng.toString(), false);
+                    addPlaceToHTML("", true);
                 },
                 (error) => {
                     alert(error.message);
@@ -114,6 +119,7 @@ function initMap() {
         //When you doubleclick a marker, add the place to the route and close the infowindow
         marker.addListener("dblclick", () => { 
             myRoute.addToRoute(name, true);
+            addPlaceToHTML(name, false);
             infowindow.close();
         })
     }
@@ -184,4 +190,18 @@ function mapRoute(directionsService, directionsRenderer, route){
             }
         }
     );
+}
+
+function addPlaceToHTML(item, isLocationServices){
+    let rtlist = document.getElementById("routeList");
+    let li = document.createElement("li");
+    if (!isLocationServices) {
+        li.setAttribute('id', item);
+        li.appendChild(document.createTextNode(item));
+    }
+    else{
+        li.setAttribute('id', "Current Location");
+        li.appendChild(document.createTextNode("Current Location"));
+    }
+    rtlist.appendChild(li);
 }

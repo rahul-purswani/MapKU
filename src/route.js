@@ -7,7 +7,7 @@
 
 class Route{
     /*
-    * @post: A route is created with no values
+    * @post: A route is created with undefined origin and destination, and empty wayps and routeList
     */
     constructor(){
         this.origin = undefined;
@@ -17,8 +17,10 @@ class Route{
         this.routeList = [];
     }
     /*
-    * @post: A place is added to the route with ", Lawrence Kansas" added to it
+    * @post: A place (string) is added to the routeList, and the origin, destination, 
+    *        and waypoints are updated to be the first, last, and inbetween elements.
     * @param: place: a string to hand into the Google Directions API 
+    *         formatPlace: a bool to decide whether or not to add ", Lawrence Kansas"
     */
     addToRoute = (place, formatPlace) => {
         if (formatPlace) this.routeList.push(place + ", Lawrence Kansas");
@@ -34,17 +36,6 @@ class Route{
         this.destination = this.routeList[this.routeList.length - 1];
 
         //Add each point in the route to the sidebar places. (This might not belong here tbh)
-        let rtlist = document.getElementById("routeList");
-        let li = document.createElement("li");
-        if (formatPlace) {
-            li.setAttribute('id', place);
-            li.appendChild(document.createTextNode(place));
-        }
-        else{
-            li.setAttribute('id', "Current Location");
-            li.appendChild(document.createTextNode("Current Location"));
-        }
-        rtlist.appendChild(li);
     }
     /*
     * @param: place: a string of a place to check
@@ -65,13 +56,13 @@ class Route{
     * @note: A valid route is one that has a origin, a destination, and has length > 1
     */
     isValidRoute = () => {
-        if (origin !== undefined && this.destination !== undefined && this.routeList.length > 1){
-            return true;
+        if (this.origin === undefined || this.destination === undefined || this.routeList.length < 2){
+            return false;
         }
-        return false;
+        return true;
     }
     /*
-    * @post: The route is cleared and the HTML is updated as such
+    * @post: The route is cleared and is left with no elements
     */
     clearRoute = () => {
         //Reset the route to its natural state
@@ -79,8 +70,5 @@ class Route{
         this.origin = undefined;
         this.destination = undefined;
         this.wayps = [];
-        //Reset some of the HTML info
-        document.getElementById("routeList").innerHTML = "<u>Route:</u>";
-        document.getElementById("directionInfo").innerHTML = "Double click on building markers or search for a building to form a route.";
     }
 }
