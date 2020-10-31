@@ -40,6 +40,13 @@ html, body {
     position: absolute;
     padding-top: 13px;
     left: 220px;
+    z-index: 3;
+}
+
+#buttons {
+    position: absolute;
+    padding-top: 70px;
+    left: 40px;
     z-index: 2;
 }
 
@@ -53,12 +60,12 @@ h1{
 }
 
 .h2Text{
-position: absolute;
-left:90px;
-top:15px;
-color: rgb(2, 133, 255);
-z-index: 2;
-padding: 0; 
-float:right;
-width:400px;
+    position: absolute;
+    left:90px;
+    top:15px;
+    color: rgb(2, 133, 255);
+    z-index: 3;
+    padding: 0; 
+    float:right;
+    width:400px;
 }

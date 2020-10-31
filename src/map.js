@@ -9,12 +9,6 @@
 * @post: Google Map is posted on screen and all UI elements are set up
 */
 function initMap() {
-    //create the image for the markers to use
-	var markerImage = new google.maps.MarkerImage('image/Jayhawk.png',
-                new google.maps.Size(100, 100),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(15, 15));
-    
     //The directionsService is what you get the directions from
     const directionsService = new google.maps.DirectionsService();
     //The directionsRenderer is what blits the route onto the Google Map
@@ -26,15 +20,88 @@ function initMap() {
         zoom: 16,
         disableDefaultUI: true, //Disable buttons for terrain view, street view, etc.
     });
+    //create an empty route to controll API input
+    let myRoute = new Route();
     
     directionsRenderer.setMap(map); //Tell the directionsRenderer where to blit the route
 
+    let searchBox = document.getElementById("searchBox");
+    //Create a new places.Autocomplete instance and add it to the search box
+    let autocomplete = new google.maps.places.Autocomplete(searchBox);
+    //make the "soft" bounds the current view of the map
+    autocomplete.bindTo('bounds', map);
+    //set the bounds to strict and only show establishments
+    autocomplete.setOptions({ strictBounds: true, types: ['establishment'] });
+
+    //Loop through all of the buildings and create markers with their information
+	for (let i = 0; i < beaches.length; i++) {
+		const beach = beaches[i];	
+		addMarker(beach[1], beach[2], beach[0], beach[3], map, myRoute);
+	}
+
+    //Debug tool: whenever you click on the map, it logs the lng and lat to console
+    map.addListener("click" , (mouseEvent) => {
+        console.log(mouseEvent.latLng.lat(), mouseEvent.latLng.lng());
+    });
+    setupButtonListeners(directionsService, directionsRenderer, myRoute);
+}
+
+/*
+* @post: A marker is added to the Google Map
+* @param: lati: latitude of marker, lngi: longitude of marker, title: HTML for marker title, name: string of place name
+*/
+function addMarker(lati, lngi, title, name, map, route){
+    //Create a new marker with the parameters
+    var markerImage = new google.maps.MarkerImage('image/Jayhawk.png',
+                new google.maps.Size(100, 100),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(15, 15));
+
+    let marker = new google.maps.Marker({
+        animation: google.maps.Animation.DROP,
+        position: {lat: lati, lng: lngi},
+        map,
+        title: name,
+        icon: markerImage
+    });
+    marker.setOpacity(.4); //Make the marker partially see-through
+    
+    //When you mouse over the marker, make it solid
+    marker.addListener('mouseover', function() { 
+        marker.setOpacity(1);
+    });
+    //When the mouse leaves the marker, set it back to see-through
+    marker.addListener('mouseout', function() { 
+        marker.setOpacity(0.4);
+    });
+    
+    //Create a new infowindow with the title parameter's HTML
+    const infowindow = new google.maps.InfoWindow({ 
+        content: title
+    });
+    //When you click on a marker, open up the infowindow
+    marker.addListener("click", () => { 
+        infowindow.open(map, marker);
+    });
+    //When you doubleclick a marker, add the place to the route and close the infowindow
+    marker.addListener("dblclick", () => { 
+        route.addToRoute(name, true);
+        addPlaceToHTML(name, false);
+        infowindow.close();
+    })
+}
+
+/*
+* @param: directionsService: google.maps.directionsService to calculate route
+*         directionsRenderer: google.maps.directionsRenderer to blits directions to the map
+*         myRoute: the route to use in the API calls
+* @post: All buttons are set up to do their intended functionality
+*/
+function setupButtonListeners(directionsService, directionsRenderer, myRoute){
     //Intermediate function for mapping the route
     const calculateDirections = function (route){
         mapRoute(directionsService, directionsRenderer, route);
     }
-
-    let myRoute = new Route(); //Create a blank route
 
     //Set up the add to route button
     document.getElementById("addToRoute").addEventListener("click", () => {
@@ -53,12 +120,6 @@ function initMap() {
     //Set up the clear route button
     document.getElementById("clearRoute").addEventListener("click", () => {
         location.reload(); //Just reload the page :)
-        /*myRoute.clearRoute();
-        //Reset some of the HTML info
-        document.getElementById("routeList").innerHTML = "<u>Route:</u>";
-        document.getElementById("directionInfo").innerHTML = "Double click on building markers or search for a building to form a route.";
-        directionsRenderer.setMap(null);
-        document.getElementById("searchBox").value = "";*/
     });
 
     //Creates a button to add the user's current location to the route list
@@ -85,57 +146,6 @@ function initMap() {
             console.log("Geolocation services were not allowed.");
             alert("Geolocation services were not allowed.");
         }
-    });
-
-    /* High-ordered Helper function
-    * @post: A marker is added to the Google Map
-    * @param: lati: latitude of marker, lngi: longitude of marker, title: HTML for marker title, name: string of place name
-    */
-	let addMarker = (lati, lngi, title, name) => {
-        //Create a new marker with the parameters
-		let marker = new google.maps.Marker({
-			animation: google.maps.Animation.DROP,
-            position: {lat: lati, lng: lngi},
-            map,
-			title: name,
-            icon: markerImage
-        });
-        marker.setOpacity(.4); //Make the marker partially see-through
-        
-        //When you mouse over the marker, make it solid
-        marker.addListener('mouseover', function() { 
-            marker.setOpacity(1);
-        });
-        //When the mouse leaves the marker, set it back to see-through
-        marker.addListener('mouseout', function() { 
-            marker.setOpacity(0.4);
-        });
-        
-        //Create a new infowindow with the title parameter's HTML
-        const infowindow = new google.maps.InfoWindow({ 
-			content: title
-        });
-        //When you click on a marker, open up the infowindow
-        marker.addListener("click", () => { 
-            infowindow.open(map, marker);
-        });
-        //When you doubleclick a marker, add the place to the route and close the infowindow
-        marker.addListener("dblclick", () => { 
-            myRoute.addToRoute(name, true);
-            addPlaceToHTML(name, false);
-            infowindow.close();
-        })
-    }
-
-    //Loop through all of the buildings and create markers with their information
-	for (let i = 0; i < beaches.length; i++) {
-		const beach = beaches[i];	
-		addMarker(beach[1], beach[2], beach[0], beach[3]);
-	}
-
-    //Debug tool: whenever you click on the map, it logs the lng and lat to console
-    map.addListener("click" , (mouseEvent) => {
-        console.log(mouseEvent.latLng.lat(), mouseEvent.latLng.lng());
     });
 }
 
@@ -195,6 +205,10 @@ function mapRoute(directionsService, directionsRenderer, route){
     );
 }
 
+/*
+* @param item, the string to be added, isLocationServices, self-explainatory
+* @post item is added to the route list in the HTML, and if it is location services it says "Current Location"
+*/
 function addPlaceToHTML(item, isLocationServices){
     let rtlist = document.getElementById("routeList");
     let li = document.createElement("li");
