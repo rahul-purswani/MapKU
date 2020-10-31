@@ -24,5 +24,6 @@ Group Project No.3 for EECS 448
 ## Sources:
 - Maps JavaScript API V3 Reference: [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/reference/map)
 - Directions API: [Google Directions API](https://developers.google.com/maps/documentation/directions/overview)
+- Places Autocomplete API: [Google Places API](https://developers.google.com/places/web-service/overview)
 - Button Styling: [Bootstrap](https://getbootstrap.com/)
 - Repository: [GitHub](https://github.com/DanielRJohnson/MapKU)
