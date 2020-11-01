@@ -44,6 +44,15 @@ function initMap() {
         console.log(mouseEvent.latLng.lat(), mouseEvent.latLng.lng());
     });
     setupButtonListeners(directionsService, directionsRenderer, myRoute);
+
+    //Map Style Selector  
+    const styleController = document.getElementById("style-control");
+    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(styleController);
+    const styleSelector = document.getElementById("style-selector");
+    map.setOptions({ styles: styles[styleSelector.value] });  
+    styleSelector.addEventListener("change", () => {
+        map.setOptions({ styles: styles[styleSelector.value]});
+    });
 }
 
 /*

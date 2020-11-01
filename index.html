@@ -13,6 +13,7 @@
 <body>
     <script src="src/buildings.js"></script>
     <script src="src/route.js"></script>
+    <script src="src/mapStyle.js"></script>
     
     <h2>
         <a href="https://github.com/DanielRJohnson/MapKU-FullProject" target="_blank" class="h2Text">MapKU </a>
@@ -34,6 +35,14 @@
         <h1>Directions</h1>
         <div id="directionInfo">Double click on building markers or search for a building to form a route.</div>
         <div id="routeList"><u>Route:</u></div>
+    </div>
+
+    <div id="style-control" class="map-style">
+        <select id="style-selector" class="selector-control">
+            <option value="default">MapKU</option>
+            <option value="night">Night Mode</option>
+            <option value="normal">Normal</option>
+        </select>
     </div>
 
     <div id="map"></div>
