@@ -116,7 +116,7 @@ function setupButtonListeners(directionsService, directionsRenderer, myRoute){
     document.getElementById("addToRoute").addEventListener("click", () => {
         let searchInfo = document.getElementById("searchBox").value;
         if (searchInfo.length > 0){
-            myRoute.addToRoute(searchInfo, true);
+            myRoute.addToRoute(searchInfo, false);
             addPlaceToHTML(searchInfo, false);
         }
     });
