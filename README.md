@@ -9,12 +9,13 @@ Group Project No.4 for EECS 448
 - [x] Users can mark multiple buildings as a destination to create the fastest route </br>
 - [x] Users can view information about the route. (estimated time, distance, etc.)</br>
 - [x] Users can view information about buildings
-## To be Determined in Project 4:
+## The Website’s Features in Project 4:
 - [x] Be able to input class
 - [x] Add Campus Bus information
 
 ## Links:
   - [Work Hours-Sheet](https://docs.google.com/spreadsheets/d/10vYHJi0r3QG4YEa_zGyJaf-fYmN1XxHtPdT_CvGnllA/edit#gid=0)
+  - [Project 4 Story Points](https://github.com/DanielRJohnson/MapKU-FullProject/blob/master/documentation/Explanation%20of%20estimation%20of%20hours%20project%204.txt)
 ## To run:
   - Open GitHub Pages link in the "about" section
   - NOTE: After 2020, I will be removing my API key from this project.
@@ -25,5 +26,5 @@ Group Project No.4 for EECS 448
 - Directions API: [Google Directions API](https://developers.google.com/maps/documentation/directions/overview/)
 - Places Autocomplete API: [Google Places API](https://developers.google.com/places/web-service/overview/)
 - Button Styling: [Bootstrap](https://getbootstrap.com/)
-- Styles for Google Map: (https://snazzymaps.com/)
+- Styles for Google Map: [Snazzy Maps](https://snazzymaps.com/)
 - Repository: [GitHub](https://github.com/DanielRJohnson/MapKU/)
