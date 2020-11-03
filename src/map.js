@@ -34,9 +34,10 @@ function initMap() {
     autocomplete.setOptions({ strictBounds: true, types: ['establishment'] });
 
     //Loop through all of the buildings and create markers with their information
+    let windows = [];
 	for (let i = 0; i < beaches.length; i++) {
 		const beach = beaches[i];	
-		addMarker(beach[1], beach[2], beach[0], beach[3], map, myRoute);
+		windows = addMarker(beach[1], beach[2], beach[0], beach[3], map, myRoute, windows);
 	}
 
     //Debug tool: whenever you click on the map, it logs the lng and lat to console
@@ -59,7 +60,7 @@ function initMap() {
 * @post: A marker is added to the Google Map
 * @param: lati: latitude of marker, lngi: longitude of marker, title: HTML for marker title, name: string of place name
 */
-function addMarker(lati, lngi, title, name, map, route){
+function addMarker(lati, lngi, title, name, map, route, wind){
     //Create a new marker with the parameters
     var markerImage = new google.maps.MarkerImage('image/Jayhawk.png',
                 new google.maps.Size(100, 100),
@@ -88,8 +89,12 @@ function addMarker(lati, lngi, title, name, map, route){
     const infowindow = new google.maps.InfoWindow({ 
         content: title
     });
+    wind.push(infowindow);
     //When you click on a marker, open up the infowindow
     marker.addListener("click", () => { 
+        for (var i = 0; i < wind.length; i++) {
+            wind[i].close();
+        }
         infowindow.open(map, marker);
     });
     //When you doubleclick a marker, add the place to the route and close the infowindow
@@ -98,6 +103,7 @@ function addMarker(lati, lngi, title, name, map, route){
         addPlaceToHTML(name, false);
         infowindow.close();
     })
+    return wind;
 }
 
 /*
