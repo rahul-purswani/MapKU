@@ -1,6 +1,6 @@
 # MapKU
 
-<h>Group members: Saher Elsayed, Daniel Johnson, Trieu-Anh Nguyen, Maokun Huang, Rahul Purswani<h>
+></br><h>Group members: Saher Elsayed, Daniel Johnson, Trieu-Anh Nguyen, Maokun Huang, Rahul Purswani<h>
 ></br>In Project 4, we enhance the functionality basic on project 3. For example, the website can help students finding the route between building basic on input the classroom. We add buildings that students commonly used and landmark buildings on the campus. For the markers of buildings, the Map KU have basic information description and link of the building's homepage. Also, we improve user interfaces which can help users easier use the Map KU.
   
 [<h>Group Project No.3 for EECS 448<h>](https://github.com/DanielRJohnson/MapKU-Prototype/)
