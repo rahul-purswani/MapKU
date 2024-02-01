@@ -17,6 +17,9 @@
 - [x] Users can view information about the route. (estimated time, distance, etc.)</br>
 - [x] Users can view information about buildings
 
+## Preview
+![Screenshot 2024-01-31 at 10 36 07 PM](https://github.com/rahul-purswani/MapKU/assets/70603471/afee208a-b131-49fc-ab06-7cbe2260895d)
+
 
 ## Links:
   - [Presentation](https://www.youtube.com/watch?v=5xkyiZ3bdYM/)
